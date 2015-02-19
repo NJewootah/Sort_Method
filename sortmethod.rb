@@ -17,12 +17,32 @@ class Sort
     end
   end
 
+  def order_elements(array)
+    sorted = false
+    until sorted
+      sorted = true
+      (array.count - 1).times do |i|
+        if array[i] > array[i + 1]
+          array[i], array[i + 1] = array[i + 1], array[i]
+          sorted = false
+        end
+      end
+    end
+  end
+
+  def sort()
+    filter_type
+    @sttray = order_elements(@strray)
+    @intray = order_elements(@intray)
+    @array = Array.new
+    @array << @intray
+
+  end
 end
 
-=begin
-array = ['Banana',23,'Apple','Grapes','Kiwi',7,8,'Strawberry']
+
+array = ['Banana',23,'Apple','Strawberry','Kiwi',7,8,'Grapes']
 
 fruit = Sort.new(array)
-fruit.filter_type
-puts fruit.intray
-=end
+fruit.sort
+puts fruit.array
