@@ -1,14 +1,29 @@
+require 'yaml'
+
 class Sort
-  attr_reader :array,:strray,:intray
+  attr_reader :strray,:intray,:sorted_array
 
   def initialize(array)
-    @array = array
-    @strray = []
-    @intray = []
+    filter_param(array)
+    order_elements(@strray)
+    order_elements(@intray)
+    concat
   end
 
-  def filter_type()
-    @array.each do |i|
+  def filter_param(object)
+    if object.is_a?Array
+      filter_type(object)
+    else
+      file = File.open(object)
+      data = YAML.load(file)
+      filter_type(data)
+    end
+  end
+
+  def filter_type(array)
+    @strray = []
+    @intray = []
+    array.each do |i|
       if i.is_a?String
         @strray << i
       elsif i.is_a?Integer
@@ -30,19 +45,9 @@ class Sort
     end
   end
 
-  def sort()
-    filter_type
-    @sttray = order_elements(@strray)
-    @intray = order_elements(@intray)
-    @array = Array.new
-    @array << @intray
-
+  def concat()
+    @sorted_array = []
+    @sorted_array << (@intray + @strray)
   end
+
 end
-
-
-array = ['Banana',23,'Apple','Strawberry','Kiwi',7,8,'Grapes']
-
-fruit = Sort.new(array)
-fruit.sort
-puts fruit.array
