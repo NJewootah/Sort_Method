@@ -29,9 +29,13 @@ describe 'Sort' do
     end
 
     it "should check the type of param parsed into the class" do
-      expect(sort2[0]).to eq(42)
-      expect(sort2[2]).to eq(568)
-      expect(sort2[5]).to eq("george")
+      expect(sort2.sorted_array[0]).to eq(42)
+      expect(sort2.sorted_array[2]).to eq(568)
+      expect(sort2.sorted_array[4]).to eq("Joe")
+    end
+
+    it "should raise an error when the wrong format of file is parsed" do
+      expect{sort2.filter_param'Incorrect object parsed. Object has to be an array or yml file'}.to raise_error
     end
   end
 end

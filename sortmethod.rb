@@ -7,7 +7,7 @@ class Sort
     filter_param(array)
     order_elements(@strray)
     order_elements(@intray)
-    concat
+    merge_array
   end
 
   def filter_param(object)
@@ -17,6 +17,7 @@ class Sort
       file = File.open(object)
       data = YAML.load(file)
       filter_type(data)
+      raise 'Incorrect object parsed. Object has to be an array or yml file' unless File.extname(file) == '.yml'
     end
   end
 
@@ -28,6 +29,8 @@ class Sort
         @strray << i
       elsif i.is_a?Integer
         @intray << i
+      else
+        array.pop(i)
       end
     end
   end
@@ -45,9 +48,10 @@ class Sort
     end
   end
 
-  def concat()
+  def merge_array()
     @sorted_array = []
-    @sorted_array << (@intray + @strray)
+    @sorted_array.concat(@intray)
+    @sorted_array.concat(@strray)
   end
 
 end
